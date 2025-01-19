@@ -1,0 +1,11 @@
+py -m venv .venv
+
+.venv/Scripts/Activate
+
+pip install -r requirements.txt
+
+В файле .env замените DBNAME на имя своей бд, которую вы создали в PgAdmin
+
+alembic upgrade head - Создает или изменяет базу данных в соответствии с последней миграцией в вашем проекте.
+
+python -m app.main - запуск
