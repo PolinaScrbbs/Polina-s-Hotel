@@ -25,7 +25,7 @@ class Config:
         self.database_url = f"postgresql+asyncpg://{self.user}:{self.password}@{self.host}:{self.port}/{self.db_name}"
 
         self.secret = os.getenv("SECRET_KEY")
-        self.token_lifetime = os.getenv("TOKEN_LIFETIME")
+        self.token_lifetime = int(os.getenv("TOKEN_LIFETIME"))
 
 
 config = Config()

@@ -1,0 +1,8 @@
+HOST="localhost"
+PORT=5432
+DBNAME="PolinaHotel"
+USER="postgres"
+PASSWORD="111"
+
+SECRET_KEY="sdfmlajwiofjw@()$@)(CI)Sc09wc898w20-f2qcws"
+TOKEN_LIFETIME=3600

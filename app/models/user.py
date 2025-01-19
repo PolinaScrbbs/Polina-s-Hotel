@@ -20,7 +20,7 @@ from sqlalchemy import (
 )
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from ..database import Base
+from ..database import Base, get_session
 from ..config import config as conf
 
 
@@ -39,9 +39,9 @@ class User(Base):
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True)
-    name = Column(String(64), unique=True, nullable=False)
-    surname = Column(String(64), unique=True, nullable=False)
-    patronymic = Column(String(64), unique=True, nullable=False)
+    name = Column(String(64), nullable=False)
+    surname = Column(String(64), nullable=False)
+    patronymic = Column(String(64), nullable=False)
     username = Column(String(20), unique=True, nullable=False)
     hashed_password = Column(String(512), nullable=False)
     date_of_birth = Column(Date, nullable=False)
@@ -69,7 +69,7 @@ class User(Base):
             + timedelta(seconds=token_lifetime),
             "csrf": str(uuid.uuid4()),
         }
-        return jwt.encode(payload, conf.secret_key, algorithm="HS256")
+        return jwt.encode(payload, conf.secret, algorithm="HS256")
 
 
 class Token(Base):
@@ -79,18 +79,17 @@ class Token(Base):
     token = Column(String(256), unique=True, nullable=False)
     user_id = Column(Integer, ForeignKey("users.id"))
 
-    async def verify_token(
-        self, session: AsyncSession, user: Optional[User]
-    ) -> Tuple[Optional[object], str]:
-        try:
-            jwt.decode(self.token, conf.secret_key, algorithms=["HS256"])
-            return self, "token verification"
+    async def verify_token(self, user: Optional[User]) -> Tuple[Optional[object], str]:
+        async with get_session() as session:
+            try:
+                jwt.decode(self.token, conf.secret, algorithms=["HS256"])
+                return self, "token verification"
 
-        except jwt.ExpiredSignatureError:
-            return await self.refresh_token(session, user)
+            except jwt.ExpiredSignatureError:
+                return await self.refresh_token(session, user)
 
-        except jwt.InvalidTokenError:
-            return None, "token is invalid"
+            except jwt.InvalidTokenError:
+                return None, "token is invalid"
 
     async def refresh_token(self, session: AsyncSession, user: Optional[User]):
         if user is None:

@@ -9,3 +9,4 @@ pip install -r requirements.txt
 alembic upgrade head - Создает или изменяет базу данных в соответствии с последней миграцией в вашем проекте.
 
 python -m app.main - запуск
+python -m app.main --create-superuser - запуск с созданием админа
