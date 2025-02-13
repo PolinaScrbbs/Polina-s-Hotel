@@ -1,10 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>{{title}}</title>
-</head>
-<body>
-	<p>{{title}}</p>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+{% endblock styles %}
+
+{% block content %}
+	<div class="cards__container">
+		<a class="card__container">
+			<div
+					class="card__picture"
+					style="background-image: url('{{ url_for('static', filename='icons/user.svg') }}');">
+			</div>
+			<p class="card__title">Users</p>
+		</a>
+		<a class="card__container">
+			<div
+					class="card__picture"
+					style="background-image: url('{{ url_for('static', filename='icons/user.svg') }}');">
+			</div>
+			<p class="card__title">Users</p>
+		</a>
+		<a class="card__container">
+			<div
+					class="card__picture"
+					style="background-image: url('{{ url_for('static', filename='icons/user.svg') }}');">
+			</div>
+			<p class="card__title">Users</p>
+		</a>
+	</div>
+{% endblock %}

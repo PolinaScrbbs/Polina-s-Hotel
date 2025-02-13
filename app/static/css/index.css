@@ -1,0 +1,49 @@
+@import "__base.css";
+
+.content{
+    height: 86vh;
+    padding: 2.5vh 15vw;
+    display: flex;
+    align-items: center;
+}
+
+.cards__container {
+    width: 100%;
+    height: 50%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.card__container {
+    display: flex;
+    flex-direction: column;
+    width: 28%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #a4a4a4;
+    border-radius: 10px;
+    padding: 15px;
+}
+
+.card__container:hover {
+    border-color: #c74d16;
+}
+
+
+.card__picture {
+    width: 80%;
+    height: 60%;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10%;
+}
+
+.card__title {
+    font-size: 24px;
+    color: black;
+}
