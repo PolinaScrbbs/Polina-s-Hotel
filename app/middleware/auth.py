@@ -12,4 +12,8 @@ async def auth_check() -> Union[Response, User]:
         return redirect(url_for("auth_router.login", next=next_url))
 
     current_user = await get_current_user(token)
+    if current_user is None:
+        next_url = request.url
+        return redirect(url_for("auth_router.login", next=next_url))
+
     return current_user

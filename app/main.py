@@ -7,7 +7,7 @@ from quart_jwt_extended import JWTManager
 from .config import config as conf
 from .database import get_session
 from .models import User, Gender, Role
-from .router import index_router, auth_router
+from .router import index_router, auth_router, users_router
 
 app = Quart(__name__, static_folder="static", template_folder="templates")
 
@@ -23,6 +23,7 @@ jwt = JWTManager(app)
 
 app.register_blueprint(index_router)
 app.register_blueprint(auth_router)
+app.register_blueprint(users_router)
 
 
 async def create_superuser():

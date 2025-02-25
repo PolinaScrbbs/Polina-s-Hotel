@@ -1,9 +1,9 @@
-from typing import Tuple, Optional
+from typing import Tuple, Optional, List
 
 from sqlalchemy.future import select
 
 from ..database import get_session
-from ..models import User
+from ..models import User, Role
 
 
 async def get_user_by_username(username: str) -> Tuple[Optional[User], Optional[str]]:
@@ -27,3 +27,17 @@ async def get_user_by_id(user_id: int) -> Tuple[Optional[User], Optional[str]]:
             return None, "user not found"
 
         return user, None
+
+
+async def get_users_list() -> Tuple[Optional[List[User]], Optional[str]]:
+    async with get_session() as session:
+        result = await session.execute(
+            select(User).where(User.role == Role.USER).order_by(User.username)
+        )
+
+        users = result.scalars().all()
+
+        if not users:
+            return None, "users list is empty"
+
+        return users, None

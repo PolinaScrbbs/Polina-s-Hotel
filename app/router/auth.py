@@ -23,7 +23,6 @@ async def login():
 
         if err:
             error_message = err
-
         else:
             external_token = token
 

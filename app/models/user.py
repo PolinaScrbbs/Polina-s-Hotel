@@ -79,11 +79,13 @@ class Token(Base):
     token = Column(String(256), unique=True, nullable=False)
     user_id = Column(Integer, ForeignKey("users.id"))
 
-    async def verify_token(self, user: Optional[User]) -> Tuple[Optional[object], str]:
+    async def verify_token(
+        self, user: Optional[User]
+    ) -> Tuple[Optional[object], Optional[str]]:
         async with get_session() as session:
             try:
                 jwt.decode(self.token, conf.secret, algorithms=["HS256"])
-                return self, "token verification"
+                return self, None
 
             except jwt.ExpiredSignatureError:
                 return await self.refresh_token(session, user)
@@ -91,9 +93,11 @@ class Token(Base):
             except jwt.InvalidTokenError:
                 return None, "token is invalid"
 
-    async def refresh_token(self, session: AsyncSession, user: Optional[User]):
+    async def refresh_token(
+        self, session: AsyncSession, user: Optional[User]
+    ) -> Tuple[Optional[object], Optional[str]]:
         if user is None:
-            return "token has expired", None
+            return None, "token has expired"
 
         new_token = await user.generate_token()
 
@@ -101,4 +105,4 @@ class Token(Base):
         session.add(self)
         await session.commit()
 
-        return self, "token updated"
+        return self, None

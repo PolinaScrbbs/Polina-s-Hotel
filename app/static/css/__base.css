@@ -2,6 +2,11 @@
 @import "__navbar.css";
 @import "__footer.css";
 
+:root {
+    --main-color: #c74d16;
+}
+
+
 .content{
     height: 86vh;
     padding: 2.5vh 15vw;

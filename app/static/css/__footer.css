@@ -1,7 +1,9 @@
+
+
 .footer {
     width: 100vw;
     height: 7vh;
-    background-color: #c74d16;
+    background-color: var(--main-color);
     align-content: center;
     text-align: center;
 }

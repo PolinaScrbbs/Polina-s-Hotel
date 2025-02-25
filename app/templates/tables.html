@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/tables.css') }}">
+{% endblock styles %}
+
+{% block content %}
+
+{% if objects %}
+    <div class="table__container">
+        <div class="add__button__container">
+            <a href="{{ url_for(add_url) }}" class="add__button">Добавить</a>
+        </div>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    {% block th %}
+                    {% endblock %}
+                </tr>
+            </thead>
+            <tbody>
+                {% block td %}
+                {% endblock %}
+            </tbody>
+        </table>
+    </div>
+
+{% else %}
+    <div class="add__button__container">
+        <a href="{{ url_for(add_url) }}" class="add__button">Добавить</a>
+    </div>
+    <p class="error__message">{{ error_message }}</p>
+{% endif %}
+{% endblock %}

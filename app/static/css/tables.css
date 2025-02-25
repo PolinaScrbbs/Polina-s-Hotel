@@ -1,0 +1,71 @@
+@import '__base.css';
+
+.content {
+    height: 86vh;
+    padding: 2.5vh 15vw;
+    justify-items: center;
+}
+
+.table__container{
+    width: auto;
+}
+
+.table {
+    border-collapse: collapse;
+    font-size: 16px;
+    text-align: center;
+}
+.table th, .table td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+.table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+.table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+.table tr:hover {
+    background-color: #f1f1f1;
+}
+.download__link {
+    color: #007BFF;
+    text-decoration: none;
+}
+.download__link:hover {
+    text-decoration: underline;
+}
+
+.add__button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: var(--main-color);
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.add__button:hover {
+    background-color: var(--main-color);
+}
+
+.add__button__container {
+    margin-bottom: 20px;
+    text-align: right;
+
+}
+
+.error__message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70vh;
+    font-size: 28px;
+    color: #666;
+    font-weight: bold;
+}

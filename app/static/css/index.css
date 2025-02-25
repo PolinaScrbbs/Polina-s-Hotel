@@ -27,7 +27,7 @@
 }
 
 .card__container:hover {
-    border-color: #c74d16;
+    border-color: var(--main-color);
 }
 
 

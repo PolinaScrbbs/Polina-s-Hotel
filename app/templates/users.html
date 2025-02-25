@@ -1,0 +1,27 @@
+{% extends "tables.html" %}
+
+{% block th %}
+    <th>ID</th>
+    <th>Username</th>
+    <th>Fullname</th>
+    <th>Date Of Birth</th>
+    <th>Phone Number</th>
+    <th>Registration Address</th>
+    <th>Gender</th>
+    <th>Role</th>
+{% endblock %}
+
+{% block td %}
+    {% for object in objects %}
+        <tr onclick="window.location='{{ url_for('index.index', id=object.id) }}';" class="clickable__row">
+            <td>{{ object.id }}</td>
+            <td>{{ object.username }}</td>
+            <td>{{ object.name }}</td>
+            <td>{{ object.date_of_birth }}</td>
+            <td>{{ object.phone_number }}</td>
+            <td>{{ object.registration_address }}</td>
+            <td>{{ object.gender.value | capitalize }}</td>
+            <td>{{ object.role.value | capitalize }}</td>
+        </tr>
+    {% endfor %}
+{% endblock %}
