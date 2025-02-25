@@ -41,3 +41,10 @@ async def get_users_list() -> Tuple[Optional[List[User]], Optional[str]]:
             return None, "users list is empty"
 
         return users, None
+
+
+async def create_user(new_user: User) -> Tuple[bool, Optional[str]]:
+    async with get_session() as session:
+        session.add(new_user)
+        await session.commit()
+        return True, None

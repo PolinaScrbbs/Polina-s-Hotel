@@ -1,4 +1,4 @@
-@import '__base.css';
+@import 'base/__base.css';
 
 .content {
     height: 86vh;

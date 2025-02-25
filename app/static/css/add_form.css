@@ -1,0 +1,138 @@
+@import "base/__base.css";
+
+.form__container {
+    width: 100%;
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    max-height: 75vh;
+    overflow-y: auto;
+}
+
+
+.form__container h2 {
+    text-align: center;
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+
+.form__group {
+    margin-bottom: 20px;
+}
+
+
+.form__group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #555;
+}
+
+
+.form__group input[type="text"],
+.form__group input[type="password"],
+.form__group input[type="tel"],
+.form__group input[type="date"],
+.form__group select {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-top: 5px;
+    margin-bottom: 20px;
+}
+
+
+.form__group select {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.submit__button {
+    width: 100%;
+    padding: 10px;
+    font-size: 18px;
+    color: #fff;
+    background-color: var(--main-color);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submit__button:hover {
+    background-color: white;
+    color: black;
+    border: 2px solid var(--main-color);
+}
+
+.error__message,
+.success__message {
+    padding: 15px;
+    margin: 20px 0;
+    border-radius: 5px;
+    background-color: #f2dede;
+    color: #a94442;
+    border: 1px solid #ebccd1;
+}
+
+.success__message {
+    background-color: #dff0d8;
+    border: 1px solid #d6e9c6;
+    color: #3c763d;
+}
+
+textarea {
+    width: 100%;
+    height: 200px;
+    resize: vertical;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.form__group input,
+.form__group select {
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.form__group input[type="password"],
+.form__group input[type="tel"],
+.form__group input[type="date"] {
+    margin-bottom: 20px;
+}
+
+.form__group select {
+    margin-bottom: 20px;
+}
+
+.form__group input[type="text"]:not([required]) {
+    background-color: #f9f9f9;
+}
+
+input:required {
+    border-color: var(--main-color);
+}
+
+input:invalid {
+    border-color: #e74c3c;
+}
+
+input[type="text"]:required,
+input[type="password"]:required,
+input[type="tel"]:required,
+input[type="date"]:required,
+select:required {
+    background-color: #fff;
+    border-color: var(--main-color);
+}

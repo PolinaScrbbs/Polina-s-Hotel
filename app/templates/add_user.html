@@ -1,0 +1,63 @@
+{% extends "base/add_form.html" %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/add_form.css') }}">
+{% endblock styles %}
+
+{% block form %}
+<form method="POST" action="{{ url_for('users_router.add') }}" enctype="multipart/form-data">
+    <div class="form__group">
+        <label for="username">Имя пользователя</label>
+        <input type="text" id="username" name="username" required placeholder="Введите имя пользователя" value="{{ form_data.get('username', '') }}">
+    </div>
+    <div class="form__group">
+        <label for="password">Пароль</label>
+        <input type="password" id="password" name="password" required placeholder="Введите пароль">
+    </div>
+    <div class="form__group">
+        <label for="confirm_password">Подтвердите пароль</label>
+        <input type="password" id="confirm_password" name="confirm_password" required placeholder="Подтвердите пароль">
+    </div>
+    <div class="form__group">
+        <label for="name">Имя</label>
+        <input type="text" id="name" name="name" required placeholder="Введите имя" value="{{ form_data.get('name', '') }}">
+    </div>
+    <div class="form__group">
+        <label for="surname">Фамилия</label>
+        <input type="text" id="surname" name="surname" required placeholder="Введите фамилию" value="{{ form_data.get('surname', '') }}">
+    </div>
+    <div class="form__group">
+		<label for="patronymic">Отчество</label>
+		<input type="text" id="patronymic" name="patronymic" required placeholder="Введите отчество" value="{{ form_data.get('patronymic', '') }}">
+	</div>
+    <div class="form__group">
+        <label for="date_of_birth">Дата рождения</label>
+        <input type="date" id="date_of_birth" name="date_of_birth" required value="{{ form_data.get('date_of_birth', '') }}">
+    </div>
+    <div class="form__group">
+        <label for="phone_number">Телефон</label>
+        <input type="tel" id="phone_number" name="phone_number" required placeholder="Введите номер телефона" value="{{ form_data.get('phone_number', '') }}">
+    </div>
+    <div class="form__group">
+        <label for="registration_address">Адрес регистрации</label>
+        <input type="text" id="registration_address" name="registration_address" required placeholder="Введите адрес регистрации" value="{{ form_data.get('registration_address', '') }}">
+    </div>
+    <div class="form__group">
+        <label for="gender">Пол</label>
+        <select id="gender" name="gender" required>
+            <option value="male" {% if form_data.get('gender') == 'male' %}selected{% endif %}>Мужской</option>
+            <option value="female" {% if form_data.get('gender') == 'female' %}selected{% endif %}>Женский</option>
+            <option value="other" {% if form_data.get('gender') == 'other' %}selected{% endif %}>Другой</option>
+        </select>
+    </div>
+    <div class="form__group">
+        <label for="role">Роль</label>
+        <select id="role" name="role" required>
+            <option value="user" {% if form_data.get('role') == 'user' %}selected{% endif %}>Пользователь</option>
+            <option value="admin" {% if form_data.get('role') == 'admin' %}selected{% endif %}>Администратор</option>
+            <option value="moderator" {% if form_data.get('role') == 'moderator' %}selected{% endif %}>Модератор</option>
+        </select>
+    </div>
+    <button type="submit" class="submit__button">Создать пользователя</button>
+</form>
+{% endblock %}
