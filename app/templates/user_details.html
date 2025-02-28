@@ -1,0 +1,15 @@
+{% extends "base/details.html" %}
+
+{% block details %}
+	<p><strong>ID:</strong> {{ user.id }}</p>
+	<p><strong>Role:</strong> {{ user.role.value | capitalize }}</p>
+	<p><strong>Gender:</strong> {{ user.gender.value | capitalize }}</p>
+	<p><strong>Fullname:</strong> {{ user.fullname }}</p>
+	<p><strong>Date of Birth:</strong> {{ user.formatted_date_of_birth }}</p>
+	<p><strong>Registration Address:</strong> {{ user.registration_address }}</p>
+	<p><strong>Phone number:</strong> {{ user.phone_number }}</p>
+	<p><strong>Created at:</strong> {{ user.formatted_created_at }}</p>
+    <p class="{{ 'red' if user.is_banned else 'green' }}">
+        <strong>Banned:</strong> {{ 'Yes' if user.is_banned else 'No' }}
+    </p>
+{% endblock %}

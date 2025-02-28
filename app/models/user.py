@@ -71,6 +71,22 @@ class User(Base):
         }
         return jwt.encode(payload, conf.secret, algorithm="HS256")
 
+    @property
+    async def fullname(self) -> str:
+        return self.surname + " " + self.name + " " + self.patronymic
+
+    @property
+    async def initials(self) -> str:
+        return self.surname + " " + self.name[0] + "." + self.patronymic[0] + "."
+
+    @property
+    async def formatted_date_of_birth(self):
+        return self.date_of_birth.strftime("%d %B %Y")
+
+    @property
+    async def formatted_created_at(self):
+        return self.created_at.strftime("%H:%M %d.%m.%Y")
+
 
 class Token(Base):
     __tablename__ = "tokens"
