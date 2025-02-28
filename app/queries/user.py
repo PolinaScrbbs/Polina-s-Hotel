@@ -79,3 +79,14 @@ async def update_user(
     await session.merge(user)
     await session.commit()
     return True, None
+
+
+async def delete_user(user_id: int) -> Tuple[bool, Optional[str]]:
+    session, user, err = await get_user_by_id(user_id)
+
+    if err:
+        return False, err
+
+    await session.delete(user)
+    await session.commit()
+    return True, None

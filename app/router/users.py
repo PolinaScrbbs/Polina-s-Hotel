@@ -1,7 +1,13 @@
 from quart import Blueprint, render_template, jsonify, request, redirect, url_for
 from ..middleware import auth_check, role_check
-from ..models import User, Role, Gender
-from ..queries import get_users_list, create_user, get_user_by_id, update_user
+from ..models import Role
+from ..queries import (
+    get_users_list,
+    create_user,
+    get_user_by_id,
+    update_user,
+    delete_user,
+)
 from ..validators import UserValidator, UserUpdateValidator
 
 users_router = Blueprint("users_router", __name__)
@@ -81,6 +87,7 @@ async def details():
         "title": "User Details",
         "detail_text": f"@{user.username}",
         "update_url": "users_router.update",
+        "delete_url": "users_router.delete",
         "object": user,
     }
     return await render_template("user_details.html", **context)
@@ -121,3 +128,25 @@ async def update():
         return redirect(url_for("users_router.details", id=user_id))
 
     return await render_template("user_update.html", **context)
+
+
+@users_router.route("/user/delete")
+async def delete():
+    user_id = int(request.args.get("id"))
+
+    auth_redirect, current_user = await auth_check()
+    if auth_redirect:
+        return auth_redirect
+
+    message = await role_check(
+        current_user.role, [Role.ADMIN], "only the admin has access"
+    )
+    if message:
+        return jsonify({"message": message})
+
+    _, err = await delete_user(user_id)
+
+    if err:
+        return jsonify({"error": err})
+
+    return redirect(url_for("users_router.table"))
