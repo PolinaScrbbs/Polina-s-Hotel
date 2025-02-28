@@ -9,7 +9,7 @@
 
 <div class="details">
     <div class="buttons__container">
-        <a href="#" class="update__button">Обновить</a>
+        <a href="{{ url_for(update_url, id=object.id) }}" class="update__button">Обновить</a>
         <a href="#" class="delete__button">Удалить</a>
     </div>
 	{% block details %}

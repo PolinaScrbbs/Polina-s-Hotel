@@ -1,8 +1,8 @@
 from quart import Blueprint, render_template, jsonify, request, redirect, url_for
 from ..middleware import auth_check, role_check
 from ..models import User, Role, Gender
-from ..queries import get_users_list, create_user, get_user_by_id
-from ..validators import UserValidator
+from ..queries import get_users_list, create_user, get_user_by_id, update_user
+from ..validators import UserValidator, UserUpdateValidator
 
 users_router = Blueprint("users_router", __name__)
 
@@ -75,26 +75,49 @@ async def details():
     if message:
         return jsonify({"message": message})
 
-    user, _ = await get_user_by_id(user_id)
+    _, user, _ = await get_user_by_id(user_id)
 
     context = {
         "title": "User Details",
         "detail_text": f"@{user.username}",
-        "user": user,
+        "update_url": "users_router.update",
+        "object": user,
     }
     return await render_template("user_details.html", **context)
-    # if request.method == "POST":
-    #     form_data = await request.form
-    #     validator = UserValidator(form_data)
-    #
-    #     new_user, error = await validator.validate()
-    #     if not error:
-    #         result, _ = await create_user(new_user)
-    #         if result:
-    #             return redirect(url_for("users_router.table"))
-    #
-    #     context["error_message"] = error
-    #     context["form_data"] = form_data
-    #
-    # print(context)
-    # return await render_template("add_user.html", **context)
+
+
+@users_router.route("/user/update", methods=["GET", "POST"])
+async def update():
+    user_id = int(request.args.get("id"))
+
+    auth_redirect, current_user = await auth_check()
+    if auth_redirect:
+        return auth_redirect
+
+    message = await role_check(
+        current_user.role, [Role.ADMIN], "only the admin has access"
+    )
+    if message:
+        return jsonify({"message": message})
+
+    session, user, _ = await get_user_by_id(user_id)
+
+    context = {"title": "Update User", "user": user, "error_message": ""}
+
+    if request.method == "POST":
+        data = await request.form
+        validator = UserUpdateValidator(data)
+
+        error_message = await validator.validate(user)
+        if error_message:
+            context["error_message"] = error_message
+            return await render_template("user_update.html", **context)
+
+        _, error_message = await update_user(session, user, data)
+        if error_message:
+            context["error_message"] = error_message
+            return await render_template("user_update.html", **context)
+
+        return redirect(url_for("users_router.details", id=user_id))
+
+    return await render_template("user_update.html", **context)
