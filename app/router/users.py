@@ -81,7 +81,10 @@ async def details():
     if message:
         return jsonify({"message": message})
 
-    _, user, _ = await get_user_by_id(user_id)
+    _, user, err = await get_user_by_id(user_id)
+
+    if err:
+        return jsonify({"error": err})
 
     context = {
         "title": "User Details",
@@ -107,7 +110,10 @@ async def update():
     if message:
         return jsonify({"message": message})
 
-    session, user, _ = await get_user_by_id(user_id)
+    session, user, err = await get_user_by_id(user_id)
+
+    if err:
+        return jsonify({"error": err})
 
     context = {"title": "Update User", "user": user, "error_message": ""}
 
